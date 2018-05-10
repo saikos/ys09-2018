@@ -50,6 +50,51 @@ public class DataAccess {
         return jdbcTemplate.query("select * from project where owner_id = ?", sqlParams, new ProjectRowMapper());
     }
 
+    public Project addProject(long ownerId, String name, String description) {
+        //Create the new project record using a prepared statement
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement ps = con.prepareStatement(
+                        "insert into projects(owner_id, name, description) values(?, ?, ?)",
+                        Statement.RETURN_GENERATED_KEYS
+                );
+                ps.setLong(1, ownerId);
+                ps.setString(2, name);
+                ps.setString(3, description);
+                return ps;
+            }
+        };
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        int cnt = jdbcTemplate.update(psc, keyHolder);
+
+        if (cnt == 1) {
+            //New row has been added
+            Project project = new Project(
+                keyHolder.getKey().longValue(), //the newly created project id
+                ownerId,
+                name,
+                description
+            );
+            return project;
+
+        }
+        else {
+            throw new RuntimeException("Creation of event failed");
+        }
+    }
+
+    public Optional<Project> getProject(Long id) {
+        Long[] params = new Long[]{id};
+        List<Project> projects = jdbcTemplate.query("select * from project where id = ?", params, new ProjectRowMapper());
+        if (projects.size() == 1)  {
+            return Optional.of(projects.get(0));
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
     public List<Project> getProjectsAlt(long ownerId) {
         
         List<Project> projects = new ArrayList<>();

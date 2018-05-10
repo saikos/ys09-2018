@@ -1,0 +1,9 @@
+#set($pageTitle = "Velocity test")
+
+<div class="row">
+    <h1>This is velocity speaking</h1>
+</div>
+
+<div class="row">
+    Over and out!
+</div>

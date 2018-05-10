@@ -6,6 +6,7 @@ import org.restlet.representation.WriterRepresentation;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.Map;
 
 public class JsonMapRepresentation extends WriterRepresentation {
@@ -21,5 +22,11 @@ public class JsonMapRepresentation extends WriterRepresentation {
     public void write(Writer writer) throws IOException {
         Gson gson = new Gson();
         writer.write(gson.toJson(map));
+    }
+
+    static JsonMapRepresentation forSimpleResult(Object o) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", o);
+        return new JsonMapRepresentation(map);
     }
 }

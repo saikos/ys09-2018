@@ -1,0 +1,9 @@
+#set($pageTitle = "Home")
+
+<div class="row">
+    <h1>Welcome</h1>
+</div>
+
+<div class="row">
+    You are user $!{request.getSession().getAttribute("user")}
+</div>
