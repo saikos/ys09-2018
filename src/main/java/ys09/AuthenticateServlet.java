@@ -1,6 +1,5 @@
 package ys09;
 
-import sun.security.krb5.Config;
 import ys09.conf.Configuration;
 
 import javax.servlet.ServletException;

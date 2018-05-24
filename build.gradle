@@ -1,6 +1,6 @@
 plugins {
     id 'java'                               //for java-only project
-    //id 'groovy'                           //for mixed java/groovy project
+    id 'groovy'                             //for mixed java/groovy project
     id 'war'                                //for genarating war files
     id 'org.akhikhl.gretty' version '2.0.0' //web app development plugin
 }
@@ -23,22 +23,27 @@ repositories {
 }
 
 dependencies {
-    //compile "org.codehaus.groovy:groovy-all:2.4.10"          //for groovy development
-    compile "javax.servlet:javax.servlet-api:3.1.0"            //the Java servlet libraries
-    compile "org.restlet.jee:org.restlet:2.3.12"               //for writing RESTful APIs
-    compile "com.google.code.gson:gson:2.8.2"                  //json library
-    compile "org.apache.commons:commons-pool2:2.4.3"           //object pool
-    compile "org.apache.commons:commons-dbcp2:2.1.1"           //db connection pool
-    compile "org.springframework:spring-jdbc:5.0.2.RELEASE"    //spring JDBC template utility
-    compile "org.apache.velocity:velocity-tools:2.0"           //velocity template engine tools
+    compile "javax.servlet:javax.servlet-api:3.1.0"              //the Java servlet libraries
+    compile "org.restlet.jee:org.restlet:2.3.12"                 //for writing RESTful APIs
+    compile "com.google.code.gson:gson:2.8.2"                    //json library
+    compile "org.apache.commons:commons-pool2:2.4.3"             //object pool
+    compile "org.apache.commons:commons-dbcp2:2.1.1"             //db connection pool
+    compile "org.springframework:spring-jdbc:5.0.2.RELEASE"      //spring JDBC template utility
+    compile "org.apache.velocity:velocity-tools:2.0"             //velocity template engine tools
 
-    providedRuntime "javax.servlet:javax.servlet-api:3.1.0"    //provided by the servlet container at runtime
+    compile "org.codehaus.groovy:groovy-all:2.4.15"              //the Groovy lang
 
-    runtime "org.restlet.jee:org.restlet.ext.servlet:2.3.12"   //Servlet adapter for Restlet framework
+    providedRuntime "javax.servlet:javax.servlet-api:3.1.0"      //provided by the servlet container at runtime
 
-    runtime 'mysql:mysql-connector-java:5.1.16'                //the MySQL JDBC driver
+    runtime "org.restlet.jee:org.restlet.ext.servlet:2.3.12"     //Servlet adapter for Restlet framework
 
-    gretty 'mysql:mysql-connector-java:5.1.16'                 //make sure it is also available to the grety plugin
+    runtime "mysql:mysql-connector-java:5.1.16"                  //the MySQL JDBC driver
+
+    testCompile "org.spockframework:spock-core:1.1-groovy-2.4"   //the Spock testing framework
+
+    testRuntime "net.bytebuddy:byte-buddy:1.6.5"                 //allows Spock to mock classes (in addition to interfaces)
+
+    gretty "mysql:mysql-connector-java:5.1.16"                   //make sure it is also available to the grety plugin
 }
 
 gretty {
